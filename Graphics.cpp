@@ -44,9 +44,39 @@ void Graphics::drawPixel(int x,int y,int r,int g,int b){
 	Uint32 color;
 
 	color = SDL_MapRGB(backbuffer->format, r, g, b);
+	buffer = (Uint32*)backbuffer->pixels + y*backbuffer->pitch/4+x;
+	*buffer = color;
 
-
+	if(SDL_MUSTLOCK(backbuffer)){
+		SDL_UnlockSurface(backbuffer);
+	}
 }
+/* drawRect()
+ * uses fillRect() to fill 4 "rects" in the shape of rectangle with a line thickness
+ * of 1 pixel
+ */
+void Graphics::drawRect(int x, int y, int width, int height, int r, int g, int b){
+	fillRect(x, y, width, 1, r, g , b);
+	fillRect(x, y+height-1, width, 1, r, g, b);
+	fillRect(x, y, 1, height, r, g, b);
+	fillRect(x+width-1, y, 1, height, r, g, b);
+}
+/* fillRect()
+ *
+ */
+void Graphics::fillRect(int x, int y, int width, int height, int r, int g, int b){
+	if (backbuffer == NULL){
+		return;
+	}
 
+	Uint32 color;
+	color = SDL_MapRGB(backbuffer->format, r, g, b );
 
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.w = width;
+	rect.h = height;
 
+	SDL_FillRect(backbuffer, &rect, color);
+}
