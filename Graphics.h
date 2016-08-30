@@ -8,8 +8,8 @@
 #ifndef GRAPHICS_H_
 #define GRAPHICS_H_
 
-#include<SDL2/SDL.H>
-
+#include<SDL2/SDL.h>
+#include<stdio.h>
 class Graphics{
 private:
 	SDL_Surface* backbuffer;
