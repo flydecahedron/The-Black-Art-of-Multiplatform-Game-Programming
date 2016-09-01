@@ -80,3 +80,28 @@ void Graphics::fillRect(int x, int y, int width, int height, int r, int g, int b
 
 	SDL_FillRect(backbuffer, &rect, color);
 }
+/* clear()
+ *
+ */
+void Graphics::clear(int r, int g, int b){
+	if(backbuffer == NULL){
+		return;
+	}
+	Uint32 color;
+	color = SDL_MapRGB(backbuffer->format, r, g, b);
+	SDL_FillRect(backbuffer, NULL, color);
+}
+
+int Graphics::getWidth(){
+	return width;
+}
+int Graphics::getHeight(){
+	return height;
+}
+SDL_Surface* Graphics::getBackbuffer(){
+	return backbuffer;
+}
+
+void Graphics::flip(){
+	SDL_Flip(backbuffer);
+}
